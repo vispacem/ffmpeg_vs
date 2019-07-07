@@ -1,0 +1,14 @@
+image: Visual Studio 2013
+
+before_build:
+- cmd: nuget restore
+
+install:
+  appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
+
+after_build:
+  - 7z a ffmpeg_vs.zip %APPVEYOR_BUILD_FOLDER%\ffmpeg_vs\bin\Debug\*.*
+
+artifacts:  # Archive the generated packages in the ci.appveyor.com build report.  - path: bin\Debug\*
+  - path: ffmpeg_vs.zip
+    name: artifacts-all
